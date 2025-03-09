@@ -1,2 +1,4 @@
 /train.csv
 /test.csv
+/transformed_test_data.npy
+/transformed_train_data.npy

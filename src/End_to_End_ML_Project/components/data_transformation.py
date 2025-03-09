@@ -82,8 +82,17 @@ class DataTransformation:
             logging.info(f"train_df columns: {train_df.columns}")
             logging.info(f"test_df columns: {test_df.columns}")
 
+            '''
+            The returned preprocessing_obj is a ColumnTransformer 
+            that will later be applied to both X_train and X_test.
+            This only creates a preprocessing pipeline but does not apply it yet.
+            '''
             preprocessing_obj = self.get_data_transformation_object(train_df)
 
+            '''
+            splitting the data into features and target
+            train and test df are read in the start of the function
+            '''
             X_train = train_df.drop('math_score', axis=1)
             y_train = train_df['math_score']
 
@@ -95,6 +104,9 @@ class DataTransformation:
             logging.info(f"X_test shape: {X_test.shape}")
             logging.info(f"y_test shape: {y_test.shape}")
 
+            '''
+            the returned pipeline object is used to transform the data
+            '''
             X_train = preprocessing_obj.fit_transform(X_train)
             X_test = preprocessing_obj.transform(X_test)
 
@@ -104,14 +116,25 @@ class DataTransformation:
             logging.info(f"train_arr shape: {train_arr.shape}")
             logging.info(f"test_arr shape: {test_arr.shape}")
 
+            '''
+            save the preprocessor object(pipeline) as pkl 
+            for new data during predictions
+            '''
             save_object(
                 file_path=self.data_transformation_config.preprocessor_obj_file_path,
                 obj=preprocessing_obj
             )
 
+            '''
+            save the transformed data as numpy array
+            to the path specified in the config and artifact dataclassess
+            '''
+            np.save(self.artifact_config.transformed_train_data_path, train_arr)
+            np.save(self.artifact_config.transformed_test_data_path, test_arr)
+
             return (
-                train_arr,
-                test_arr,
+                self.artifact_config.transformed_train_data_path,
+                self.artifact_config.transformed_test_data_path,
                 self.data_transformation_config.preprocessor_obj_file_path
             )
 

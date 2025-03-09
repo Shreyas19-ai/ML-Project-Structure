@@ -1,0 +1,5 @@
+outs:
+- md5: f3a4fcd99c9b188dbac8d1c20f9dcaf2
+  size: 32128
+  hash: md5
+  path: transformed_test_data.npy

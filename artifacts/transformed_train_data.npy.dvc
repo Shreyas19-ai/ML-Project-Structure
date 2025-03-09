@@ -1,0 +1,5 @@
+outs:
+- md5: f90b3540d5ee5b8ba9fd29243a603eea
+  size: 128128
+  hash: md5
+  path: transformed_train_data.npy
